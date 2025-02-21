@@ -110,13 +110,23 @@ class TestBooksCollector:
 
         collector.delete_book_from_favorites('1984')
 
+        assert '1984' not in collector.get_list_of_favorites_books()
+
+
     def test_delete_non_existent_book_from_favorites(self): # удаляем уже ранее удаленную книгу из избранного
         collector = BooksCollector()
 
         collector.delete_book_from_favorites('1984')
 
-        assert '1984' not in collector.get_list_of_favorites_books()
+        assert len(collector.favorites) == 0
 
+
+    def test_get_list_of_favorites_books(self): # получение списка избранных книг
+        collector = BooksCollector()
+        collector.add_new_book('1984')
+        collector.add_book_in_favorites('1984')
+
+        assert collector.get_list_of_favorites_books() == ['1984']
     def test_add_new_book_with_long_title(self): # в названии больше 40 символов
         collector = BooksCollector()
         collector.add_new_book('Мы' * 41)
